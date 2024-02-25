@@ -1,8 +1,24 @@
-spring.datasource.url=jdbc:postgresql://localhost:5432/localDB
-spring.datasource.username=postgres
-spring.datasource.password=123
-spring.jpa.hibernate.ddl-auto=none
-spring.liquibase.change-log=db/changelog/db.changelog-master.yaml
-spring.jpa.show-sql=true
-server.port=8082
-spring.jpa.properties.hibernate.format_sql=true
+server:
+  port: 8085
+spring:
+  application:
+    name: learnVerse-service
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format:
+          sql: 'true'
+    hibernate:
+      ddl-auto: validate
+    show-sql: 'true'
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: false
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/localDB
+    username: postgres
+    password: 123

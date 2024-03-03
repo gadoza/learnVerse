@@ -1,5 +1,7 @@
 package com.example.learnverse;
 
+import com.example.learnverse.dtos.UserRequest;
+import com.example.learnverse.services.KeycloakUserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -8,8 +10,20 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class LearnVerseApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(LearnVerseApplication.class, args);
+
+
+        KeycloakUserService kc = new KeycloakUserService();
+        UserRequest ur = new UserRequest();
+        ur.setUsername("another");
+        ur.setEmail("done@email.com");
+        ur.setPassword("1234");
+
+        System.out.println(kc.getAccessToken());
+        kc.createUser(kc.getAccessToken(), ur);
+//        kc.createUser("eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJWbGF3dTZBQVhaRGxsclJYOEVydDl0c1ZSWVFsbEJ3blNVeGhveUlPT0lBIn0.eyJleHAiOjE3MDk0NzM5NDMsImlhdCI6MTcwOTQ3MzY0MywianRpIjoiZmEzYWIwOTAtNDk2Zi00OWMxLWEwODktZjI1NGUyMzc2YzFlIiwiaXNzIjoiaHR0cDovLzEyNy4wLjAuMTo4MDgxL3JlYWxtcy9teVJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImE5NTUwN2M0LTZjOGYtNDFjOC04NTg3LTA3YWY0ZWFmNTU0NSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI5NGZhMmRlOS1hMzk2LTQ3NmItOGRlNy01M2VjOTQyZWIzY2EiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbXlyZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6ImFkZHJlc3MgcHJvZmlsZSBlbWFpbCIsInNpZCI6Ijk0ZmEyZGU5LWEzOTYtNDc2Yi04ZGU3LTUzZWM5NDJlYjNjYSIsImFkZHJlc3MiOnsic3RyZWV0X2FkZHJlc3MiOiJxdWRzIiwicmVnaW9uIjoicXViYWFfIiwicG9zdGFsX2NvZGUiOiIxMjMiLCJjb3VudHJ5IjoiZWd5cHQifSwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJtb2hhbWVkIGZhdGh5IiwicHJlZmVycmVkX3VzZXJuYW1lIjoibW9oYW1lZCIsImdpdmVuX25hbWUiOiJtb2hhbWVkIiwiZmFtaWx5X25hbWUiOiJmYXRoeSIsImVtYWlsIjoibW9AZW1haWwuY29tIn0.Q0Yj3XBBaHJeR7DEuy26bIUfVGDlLaQA9VSrPsaUkAJTqDxIbf0Fn9rV-rZnZVhpj3oiRCeOreliVsDE5n5_3GVRRqQ2cv3lYIUjYmpyX7zmxFzOsip47Jvcz4T9gM3LGM8bqW8P88cme13bcWtKsorhNFQ1zhP6l4ns74qVMzowZUzvwexBqPAFqpUbss6GXm5pqluNX3Ext0Zub3jWlUyaakzUJjnnm1NGVSjAkRN25mTFts30pFbmicc5taplQ7_cNd7-T300mMOBN-TLVrX94bG22QA44RM49eOgQv8XtV1Ma9GwpZiu3wqKkXhe9P4CYNeMli_nBXF-gyEuKA", ur);
     }
 
 }

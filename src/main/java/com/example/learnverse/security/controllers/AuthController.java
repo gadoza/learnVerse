@@ -1,4 +1,4 @@
-package com.example.learnverse.controllers;
+package com.example.learnverse.security.controllers;
 
 import com.example.learnverse.security.service.TokenService;
 import lombok.RequiredArgsConstructor;

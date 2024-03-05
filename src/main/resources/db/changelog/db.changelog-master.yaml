@@ -1,8 +1,2 @@
 databaseChangeLog:
-  - include:
-      file: ./changes/create_user_administration_schema.sql
-      relativeToChangelogFile: true
 
-  - include:
-      file: ./changes/add_users_table.sql
-      relativeToChangelogFile: true

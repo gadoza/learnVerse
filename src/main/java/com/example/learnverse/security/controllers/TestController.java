@@ -1,4 +1,4 @@
-package com.example.learnverse.controllers;
+package com.example.learnverse.security.controllers;
 
 
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,5 +1,6 @@
 package com.example.learnverse.security.service;
 
+import com.example.learnverse.security.dto.AuthDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +19,7 @@ public class TokenService {
 
     private final JwtEncoder jwtEncoder;
 
-    public String generateToken(Authentication authentication) {
+    public AuthDto generateToken(Authentication authentication) {
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -30,6 +31,7 @@ public class TokenService {
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .build();
-        return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        String token = this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        return new AuthDto(token);
     }
 }

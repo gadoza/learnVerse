@@ -1,6 +1,7 @@
 package com.example.learnverse.security.controllers;
 
 import com.example.learnverse.dto.ApiResponse;
+import com.example.learnverse.security.dto.AuthDto;
 import com.example.learnverse.security.dto.JpaUserDto;
 import com.example.learnverse.security.service.JpaUserDetailsService;
 import com.example.learnverse.security.service.TokenService;
@@ -20,7 +21,7 @@ public class AuthController {
     private final JpaUserDetailsService jpaUserDetailsService;
 
     @PostMapping("/sign-in")
-    public String signIn(Authentication authentication) {
+    public AuthDto signIn(Authentication authentication) {
         return tokenService.generateToken(authentication);
     }
 

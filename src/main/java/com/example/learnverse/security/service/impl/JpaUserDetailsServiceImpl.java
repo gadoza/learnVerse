@@ -1,10 +1,11 @@
 package com.example.learnverse.security.service.impl;
 
-import com.example.learnverse.exceptions.UsernameAlreadyTakenException;
+import com.example.learnverse.exceptions.BusinessException;
 import com.example.learnverse.security.dto.JpaUserDto;
 import com.example.learnverse.security.entities.JpaUser;
 import com.example.learnverse.security.repositories.JpaUserRepository;
 import com.example.learnverse.security.service.JpaUserDetailsService;
+import com.example.learnverse.utilities.Common;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -24,6 +26,8 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
 
     private final JpaUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtDecoder jwtDecoder;
+
 
 
 
@@ -46,10 +50,21 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
         return userRepository.save(user).getId();
     }
 
+    @Override
+    public JpaUserDto getCurrentUserDetails() {
+        String username = Common.extractUsername(jwtDecoder);
+        JpaUser user = userRepository.findJpaUsersByUserName(username).orElseThrow(()-> new BusinessException("user not found", HttpStatus.NOT_FOUND));
+        JpaUserDto userDto = new JpaUserDto();
+        userDto.setUserName(user.getUserName());
+        userDto.setEmail(user.getEmail());
+        userDto.setAddress(user.getAddress());
+        return userDto;
+    }
+
     private void validateUserName(JpaUserDto userDto) {
         Optional<JpaUser> user = userRepository.findJpaUsersByUserName(userDto.getUserName());
         if(user.isPresent()){
-            throw new UsernameAlreadyTakenException("userName is already taken by someone else", HttpStatus.CONFLICT);
+            throw new BusinessException("userName is already taken by someone else", HttpStatus.CONFLICT);
         }
     }
 }

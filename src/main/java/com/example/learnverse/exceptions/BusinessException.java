@@ -2,9 +2,9 @@ package com.example.learnverse.exceptions;
 
 import org.springframework.http.HttpStatus;
 
-public class UsernameAlreadyTakenException extends RuntimeException{
+public class BusinessException extends RuntimeException{
     private HttpStatus httpStatus;
-    public UsernameAlreadyTakenException(String message, HttpStatus httpStatus) {
+    public BusinessException(String message, HttpStatus httpStatus) {
         super(message);
         this.httpStatus = httpStatus;
     }

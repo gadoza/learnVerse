@@ -40,7 +40,7 @@ public class securityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeRequests(auth -> auth.requestMatchers("/sign-up").permitAll()
+                .authorizeRequests(auth -> auth
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((rs) ->
                         rs.jwt((jwt) ->jwt.decoder(jwtDecoder())))

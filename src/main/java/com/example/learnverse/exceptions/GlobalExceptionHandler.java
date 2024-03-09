@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<?> handleUsernameAlreadyTakenException(BusinessException ex) {
+    @ExceptionHandler(UsernameAlreadyTakenException.class)
+    public ResponseEntity<?> handleUsernameAlreadyTakenException(UsernameAlreadyTakenException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
 

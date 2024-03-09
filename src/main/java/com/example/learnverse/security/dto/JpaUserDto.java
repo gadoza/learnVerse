@@ -10,4 +10,6 @@ public class JpaUserDto {
     private String password;
     private String email;
     private String address;
+    private String firstName;
+    private String familyName;
 }

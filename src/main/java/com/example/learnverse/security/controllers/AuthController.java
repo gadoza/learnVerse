@@ -37,7 +37,7 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ApiResponse<Long> signUp(@RequestBody JpaUserDto userDto) {
-        return ApiResponse.created(jpaUserDetailsService.insertNewUser(userDto)) ;
+        return ApiResponse.created(jpaUserDetailsService.insertNewUser(userDto));
     }
 
 }

@@ -25,4 +25,10 @@ public class JpaUser extends BaseEntity<Long> {
     @Column
     private String address;
 
+    @Column
+    private String firstName;
+
+    @Column
+    private String familyName;
+
 }

@@ -31,8 +31,6 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     private final UserMapper userMapper;
 
 
-
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         JpaUser user = userRepository.findJpaUsersByUserName(username)
@@ -52,13 +50,13 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     @Override
     public JpaUserDto getCurrentUserDetails() {
         String username = Common.extractUsername(jwtDecoder);
-        JpaUser user = userRepository.findJpaUsersByUserName(username).orElseThrow(()-> new BusinessException("user not found", HttpStatus.NOT_FOUND));
+        JpaUser user = userRepository.findJpaUsersByUserName(username).orElseThrow(() -> new BusinessException("user not found", HttpStatus.NOT_FOUND));
         return userMapper.map(user);
     }
 
     private void validateUserName(JpaUserDto userDto) {
         Optional<JpaUser> user = userRepository.findJpaUsersByUserName(userDto.getUserName());
-        if(user.isPresent()){
+        if (user.isPresent()) {
             throw new BusinessException("userName is already taken by someone else", HttpStatus.CONFLICT);
         }
     }

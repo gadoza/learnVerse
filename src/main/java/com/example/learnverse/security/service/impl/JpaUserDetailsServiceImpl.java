@@ -1,6 +1,7 @@
 package com.example.learnverse.security.service.impl;
 
 import com.example.learnverse.exceptions.BusinessException;
+import com.example.learnverse.mapper.UserMapper;
 import com.example.learnverse.security.dto.JpaUserDto;
 import com.example.learnverse.security.entities.JpaUser;
 import com.example.learnverse.security.repositories.JpaUserRepository;
@@ -27,6 +28,7 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     private final JpaUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtDecoder jwtDecoder;
+    private final UserMapper userMapper;
 
 
 
@@ -42,10 +44,7 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     @Override
     public Long insertNewUser(JpaUserDto userDto) {
         validateUserName(userDto);
-        JpaUser user = new JpaUser();
-        user.setUserName(userDto.getUserName());
-        user.setEmail(userDto.getEmail());
-        user.setAddress(userDto.getAddress());
+        JpaUser user = userMapper.unmap(userDto);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         return userRepository.save(user).getId();
     }
@@ -54,11 +53,7 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     public JpaUserDto getCurrentUserDetails() {
         String username = Common.extractUsername(jwtDecoder);
         JpaUser user = userRepository.findJpaUsersByUserName(username).orElseThrow(()-> new BusinessException("user not found", HttpStatus.NOT_FOUND));
-        JpaUserDto userDto = new JpaUserDto();
-        userDto.setUserName(user.getUserName());
-        userDto.setEmail(user.getEmail());
-        userDto.setAddress(user.getAddress());
-        return userDto;
+        return userMapper.map(user);
     }
 
     private void validateUserName(JpaUserDto userDto) {

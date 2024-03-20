@@ -1,13 +1,14 @@
 package com.example.learnverse.entities;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
-
+@Entity
+@Setter
+@Getter
 public class Course {
     private String courseName;
     private String description;

@@ -1,10 +1,7 @@
 package com.example.learnverse.entities;
 
 import com.example.learnverse.security.entities.JpaUser;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Student extends JpaUser {
+    @Column
     private String organization;
     @ManyToMany
     @JoinTable(

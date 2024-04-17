@@ -1,9 +1,7 @@
 package com.example.learnverse.security.entities;
 
 import com.example.learnverse.base.model.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Inheritance(strategy=InheritanceType.JOINED)
 public class JpaUser extends BaseEntity<Long> {
 
     @Column

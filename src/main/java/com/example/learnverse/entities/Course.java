@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "course")
 public class Course extends BaseEntity<Long> {
     private String courseName;
     private String description;
@@ -29,5 +30,9 @@ public class Course extends BaseEntity<Long> {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private List<Instructor> instructors;
+
+    @Lob
+    @Column
+    private byte[] image;
 
 }

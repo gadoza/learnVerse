@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,7 +18,7 @@ public class Course extends BaseEntity<Long> {
     private String description;
     private BigDecimal price;
     @ManyToMany(mappedBy = "courses")
-    private List<Student> students;
+    private Set<Student> students;
     @ManyToMany
     @JoinTable(
             joinColumns = @JoinColumn(name = "tag_id"),

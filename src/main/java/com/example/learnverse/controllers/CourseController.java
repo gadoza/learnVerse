@@ -1,16 +1,20 @@
 package com.example.learnverse.controllers;
 
 import com.example.learnverse.dto.CourseDto;
+
 import com.example.learnverse.services.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/course")
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;
+
     @PostMapping
     public ResponseEntity<CourseDto> addCourse(@RequestBody CourseDto courseDto) {
         CourseDto savedCourse = courseService.saveCourse(courseDto);
@@ -43,5 +47,7 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 
 }

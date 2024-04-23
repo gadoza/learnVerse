@@ -8,7 +8,9 @@ import com.example.learnverse.services.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,9 +40,9 @@ public class CourseServiceImpl implements CourseService {
             course.setCourseName(courseDto.getCourseName());
             course.setDescription(courseDto.getDescription());
             course.setPrice(courseDto.getPrice());
-            if (courseDto.getImage() != null) {
-                course.setImage(Base64.getDecoder().decode(courseDto.getImage()));
-            }
+//            if (courseDto.getImage() != null) {
+//                course.setImage(Base64.getDecoder().decode(courseDto.getImage()));
+//            }
             courseRepository.save(course);
             return courseMapper.map(course);
         }
@@ -56,4 +58,18 @@ public class CourseServiceImpl implements CourseService {
         return false;
     }
 
+    /*
+    * TODO: improve effiecieny(don't fetech student from DB)
+    * */
+    @Override
+    public List<CourseDto> findAllCourses() {
+        List<CourseDto> list = new ArrayList<>();
+        var courses = courseRepository.findAll();
+        for(Course course: courses){
+            var couseDto = courseMapper.map(course);
+            couseDto.setStudents(null);
+            list.add(couseDto);
+        }
+        return list;
+    }
 }

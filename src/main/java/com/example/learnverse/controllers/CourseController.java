@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,6 +30,15 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping
+    public ResponseEntity<List<CourseDto>> getCourses() {
+        List<CourseDto> courseDtos = courseService.findAllCourses();
+        if (courseDtos != null) {
+            return ResponseEntity.ok(courseDtos);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PutMapping("/{id}")
     public ResponseEntity<CourseDto> updateCourse(@PathVariable Long id, @RequestBody CourseDto courseDto) {
         CourseDto updatedCourse = courseService.updateCourse(id, courseDto);
@@ -47,7 +57,5 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 
 }

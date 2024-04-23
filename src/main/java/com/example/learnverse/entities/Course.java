@@ -14,8 +14,11 @@ import java.util.Set;
 @Setter
 @Table(name = "course")
 public class Course extends BaseEntity<Long> {
+    @Column
     private String courseName;
+    @Column
     private String description;
+    @Column
     private BigDecimal price;
     @ManyToMany(mappedBy = "courses")
     private Set<Student> students;
@@ -32,8 +35,14 @@ public class Course extends BaseEntity<Long> {
     )
     private List<Instructor> instructors;
 
-    @Lob
-    @Column
-    private byte[] image;
+    //to be efficient to get the reviews of a specific course
+    //unidirectional from the course side
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "review_id")
+    private List<Review> reviews;
+
+//    @Lob
+//    @Column
+//    private byte[] image;
 
 }

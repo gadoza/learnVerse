@@ -15,13 +15,18 @@ import java.util.Date;
 @Getter
 public class Review extends BaseEntity<Long> {
     @Column
-    private String description;
+    private String content;
     @Column
     private Date issueDate;
-    @Column
-    private int nStars;
+//    @Column
+//    private Long stars;
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    //unidirectional from the many(Review) side
+    @ManyToOne
+    @JoinColumn(name = "student_id")
+    private Student student;
 
 }

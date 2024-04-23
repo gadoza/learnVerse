@@ -33,10 +33,10 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        JpaUser user = userRepository.findJpaUsersByUserName(username)
+        String password = userRepository.findPasswordByUserName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
-        return new User(user.getUserName(), user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("read")));
+        return new User(username, password, Collections.singletonList(new SimpleGrantedAuthority("read")));
     }
 
     @Override

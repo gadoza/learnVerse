@@ -13,4 +13,12 @@ public interface JpaUserRepository extends JpaRepository<JpaUser, Long>{
             SELECT U FROM JpaUser U WHERE U.userName = :userName
 """)
     Optional<JpaUser> findJpaUsersByUserName(@Param("userName") String userName);
+
+
+    @Query("""
+            SELECT
+             U.password
+             FROM JpaUser U WHERE U.userName = :userName
+""")
+    Optional<String> findPasswordByUserName(@Param("userName") String userName);
 }

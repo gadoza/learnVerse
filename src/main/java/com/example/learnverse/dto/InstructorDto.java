@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @Getter
 public class InstructorDto extends UserDto{
-    private int id;
+    private Long id;
     private String intro;
     private List<Course> courses;
 }

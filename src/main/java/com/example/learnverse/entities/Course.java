@@ -41,8 +41,8 @@ public class Course extends BaseEntity<Long> {
     @JoinColumn(name = "review_id")
     private List<Review> reviews;
 
-//    @Lob
-//    @Column
-//    private byte[] image;
+    @Lob
+    @Column
+    private byte[] image;
 
 }

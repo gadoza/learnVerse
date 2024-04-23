@@ -1,21 +1,25 @@
 package com.example.learnverse.entities;
 
 import com.example.learnverse.security.entities.JpaUser;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Setter
 @Getter
+@Setter
 public class Student extends JpaUser {
+    @Column
     private String organization;
-    @OneToMany(mappedBy = "student")
-    private List<Review> reviews;
-    @ManyToMany(mappedBy = "students")
-    private List<Course> course;
+    @ManyToMany
+    @JoinTable(
+            name = "courses_taken_by_student",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private Set<Course> courses;
+
 }

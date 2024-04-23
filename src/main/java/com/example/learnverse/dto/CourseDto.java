@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -16,6 +17,6 @@ public class CourseDto {
     private List<TagDto> tags;
     private List<ReviewDto> reviews;
     private List<InstructorDto> instructors;
-    private List<StudentDto> students;
-    private String image;
+    private Set<StudentDto> students;
+//    private String image;
 }

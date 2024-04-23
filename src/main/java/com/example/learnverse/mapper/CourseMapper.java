@@ -10,10 +10,11 @@ import java.util.Base64;
 
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
-    @Mapping(source = "image", target = "image", qualifiedByName = "convertImageFromBase64ToString")
+//    @Mapping(source = "image", target = "image", qualifiedByName = "convertImageFromBase64ToString")
     CourseDto map(Course t);
-    @Mapping(source = "image", target = "image", qualifiedByName = "convertImageFromStringToBase64")
+//    @Mapping(source = "image", target = "image", qualifiedByName = "convertImageFromStringToBase64")
     Course unmap(CourseDto dto);
+
 
     @Named("convertImageFromBase64ToString")
     default String  convertImageFromBase64ToString(byte [] image){

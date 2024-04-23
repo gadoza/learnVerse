@@ -21,4 +21,5 @@ public class Student extends JpaUser {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private Set<Course> courses;
+
 }

@@ -26,4 +26,4 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/localDB
     username: postgres
-    password: 622000
+    password: 123

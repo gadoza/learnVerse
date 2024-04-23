@@ -18,5 +18,5 @@ public class CourseDto {
     private List<ReviewDto> reviews;
     private List<InstructorDto> instructors;
     private Set<StudentDto> students;
-//    private String image;
+    private String image;
 }

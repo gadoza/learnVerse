@@ -7,6 +7,7 @@ import com.example.learnverse.repositories.CourseRepository;
 import com.example.learnverse.services.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -25,8 +26,9 @@ public class CourseServiceImpl implements CourseService {
         return courseMapper.map(course);
     }
     @Override
+    @Transactional
     public CourseDto getCourseById(Long id) {
-        Optional<Course> course = courseRepository.findById(id);
+        Optional<Course> course = courseRepository.findCourseById(id);
         if (course.isPresent()) {
             return courseMapper.map(course.get());
         }
@@ -62,14 +64,8 @@ public class CourseServiceImpl implements CourseService {
     * TODO: improve effiecieny(don't fetech student from DB)
     * */
     @Override
+    @Transactional
     public List<CourseDto> findAllCourses() {
-        List<CourseDto> list = new ArrayList<>();
-        var courses = courseRepository.findAll();
-        for(Course course: courses){
-            var couseDto = courseMapper.map(course);
-            couseDto.setStudents(null);
-            list.add(couseDto);
-        }
-        return list;
+        return courseMapper.map(courseRepository.findAllValidCourses());
     }
 }

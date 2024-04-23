@@ -8,13 +8,19 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Long> {
     @Query("""
-            SELECT C FROM Course C WHERE C.courseName = :courseName
+            SELECT C FROM Course C WHERE C.id = :id and C.isDeleted = 0
             """)
-    Optional<Course> findCourseByCourseName(@Param("courseName") String courseName);
+    Optional<Course> findCourseById(@Param("id") Long id);
+
+    @Query("""
+            SELECT C FROM Course C WHERE C.isDeleted = 0
+            """)
+    List<Course> findAllValidCourses();
 
 
 

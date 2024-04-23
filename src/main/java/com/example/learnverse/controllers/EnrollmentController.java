@@ -45,4 +45,6 @@ public class EnrollmentController {
         enrollmentService.unenroll(enrolledCourse, enrolledStudent);
         return ResponseEntity.ok().build();
     }
+    //TODO transfer logic to service
+    //TODO get courses enrolled by student
 }

@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 public class EnrollmentDto {
     private Long studentId;
-    private Long CourseId;
+    private Long courseId;
 }

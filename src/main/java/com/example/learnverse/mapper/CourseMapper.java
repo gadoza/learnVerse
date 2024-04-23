@@ -7,6 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.Base64;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
@@ -14,6 +15,11 @@ public interface CourseMapper {
     CourseDto map(Course t);
     @Mapping(source = "image", target = "image", qualifiedByName = "convertImageFromStringToBase64")
     Course unmap(CourseDto dto);
+
+    List<CourseDto> map(List<Course> t);
+    List<Course> unmap(List<CourseDto> dto);
+
+
 
 
     @Named("convertImageFromBase64ToString")

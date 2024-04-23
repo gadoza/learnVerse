@@ -42,9 +42,9 @@ public class CourseServiceImpl implements CourseService {
             course.setCourseName(courseDto.getCourseName());
             course.setDescription(courseDto.getDescription());
             course.setPrice(courseDto.getPrice());
-//            if (courseDto.getImage() != null) {
-//                course.setImage(Base64.getDecoder().decode(courseDto.getImage()));
-//            }
+            if (courseDto.getImage() != null) {
+                course.setImage(Base64.getDecoder().decode(courseDto.getImage()));
+            }
             courseRepository.save(course);
             return courseMapper.map(course);
         }

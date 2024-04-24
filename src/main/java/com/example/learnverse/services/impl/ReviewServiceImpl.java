@@ -8,6 +8,7 @@ import com.example.learnverse.repositories.ReviewRepository;
 import com.example.learnverse.services.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewMapper.map(review);
     }
 
+    @Transactional
     @Override
     public ReviewDto getReviewById(Long id) {
         Optional<Review> review = reviewRepository.findById(id);
@@ -51,6 +53,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    @Transactional
     public List<ReviewDto> findAllCourseReviews(Long id) {
         List<Review> reviews = reviewRepository.findByCourseId(id);
         if(reviews!=null){

@@ -18,8 +18,8 @@ public class Review extends BaseEntity<Long> {
     private String content;
     @Column
     private Date issueDate;
-//    @Column
-//    private Long stars;
+    @Column
+    private Long n_stars;
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;

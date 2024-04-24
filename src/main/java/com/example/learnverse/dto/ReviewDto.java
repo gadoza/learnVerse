@@ -10,7 +10,7 @@ import java.util.Date;
 public class ReviewDto {
     private StudentDto student;
     private CourseDto course;
-//    private Long stars;
+    private Long n_stars;
     private Date issueDate;
     private String content;
     private Long id;

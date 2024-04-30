@@ -18,7 +18,6 @@ public abstract class BaseEntity <ID extends Serializable> extends AuditTrail im
             sequenceName = "id_seq",
             allocationSize = 1, initialValue = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_seq")
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private ID id;
     private int isDeleted;

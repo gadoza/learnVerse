@@ -1,5 +1,6 @@
 package com.example.learnverse.dto;
 
+import com.example.learnverse.security.entities.JpaUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +17,7 @@ public class CourseDto {
     private BigDecimal price;
     private List<TagDto> tags;
     private List<ReviewDto> reviews;
-    private List<InstructorDto> instructors;
-    private Set<StudentDto> students;
+    private List<JpaUser> instructors;
+    private Set<JpaUser> students;
     private String image;
 }

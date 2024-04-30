@@ -1,6 +1,7 @@
 package com.example.learnverse.entities;
 
 import com.example.learnverse.base.model.BaseEntity;
+import com.example.learnverse.security.entities.JpaUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,25 +21,19 @@ public class Course extends BaseEntity<Long> {
     private String description;
     @Column
     private BigDecimal price;
-    @ManyToMany(mappedBy = "courses")
-    private Set<Student> students;
+    @ManyToMany(mappedBy = "takenCourses")
+    private Set<JpaUser> students;
     @ManyToMany
     @JoinTable(
             joinColumns = @JoinColumn(name = "tag_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     private List<Tag> tags;
-    @ManyToMany
-    @JoinTable(
-            joinColumns = @JoinColumn(name = "instructor_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Instructor> instructors;
 
-    //to be efficient to get the reviews of a specific course
-    //unidirectional from the course side
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
+    @ManyToMany(mappedBy = "taughtCourses")
+    private Set<JpaUser> instructors;
+
+    @OneToMany(mappedBy = "course")
     private List<Review> reviews;
 
     @Lob

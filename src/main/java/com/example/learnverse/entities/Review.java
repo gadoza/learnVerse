@@ -1,10 +1,8 @@
 package com.example.learnverse.entities;
 
 import com.example.learnverse.base.model.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.example.learnverse.security.entities.JpaUser;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,12 +19,10 @@ public class Review extends BaseEntity<Long> {
     @Column
     private Long n_stars;
     @ManyToOne
-    @JoinColumn(name = "course_id")
     private Course course;
 
     //unidirectional from the many(Review) side
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    private JpaUser user;
 
 }

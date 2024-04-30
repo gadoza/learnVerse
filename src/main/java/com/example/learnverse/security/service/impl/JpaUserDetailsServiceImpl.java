@@ -52,7 +52,13 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     public JpaUserDto getCurrentUserDetails() {
         String username = Common.extractUsername(jwtDecoder);
         JpaUser user = userRepository.findJpaUsersByUserName(username).orElseThrow(() -> new BusinessException("user not found", HttpStatus.NOT_FOUND));
+        user.setPassword(null);
         return userMapper.map(user);
+    }
+
+    @Override
+    public void updateUserDetails(JpaUserDto userDto) {
+        userRepository.save(userMapper.unmap(userDto));
     }
 
     private void validateUserName(JpaUserDto userDto) {

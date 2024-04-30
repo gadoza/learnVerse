@@ -1,7 +1,5 @@
 package com.example.learnverse.mapper;
 
-import com.example.learnverse.dto.StudentDto;
-import com.example.learnverse.entities.Student;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 

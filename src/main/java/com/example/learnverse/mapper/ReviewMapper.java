@@ -11,22 +11,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
-    @Mapping(source = "course.image", target = "course.image", qualifiedByName = "convertImageFromBase64ToString")
     ReviewDto map(Review t);
-    @Mapping(source = "course.image", target = "course.image", qualifiedByName = "convertImageFromStringToBase64")
     Review unmap(ReviewDto dto);
 
     List<ReviewDto> map(List<Review> t);
     List<Review> unmap(List<ReviewDto> dto);
 
-    @Named("convertImageFromBase64ToString")
-    default String  convertImageFromBase64ToString(byte [] image){
-        if(image == null) return null;
-        return Base64.getEncoder().encodeToString(image);
-    }
-    @Named("convertImageFromStringToBase64")
-    default byte[]  convertImageFromStringToBase64(String image){
-        if(image == null) return null;
-        return Base64.getDecoder().decode(image);
-    }
+
 }

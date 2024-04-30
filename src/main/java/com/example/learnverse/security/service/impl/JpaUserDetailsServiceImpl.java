@@ -1,6 +1,7 @@
 package com.example.learnverse.security.service.impl;
 
 import com.example.learnverse.exceptions.BusinessException;
+import com.example.learnverse.exceptions.UsernameAlreadyTakenException;
 import com.example.learnverse.mapper.UserMapper;
 import com.example.learnverse.security.dto.JpaUserDto;
 import com.example.learnverse.security.entities.JpaUser;

@@ -27,3 +27,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/localDB
     username: postgres
     password: 123
+
+  servlet:
+    multipart:
+      max-file-size: 10GB
+      max-request-size: 10GB

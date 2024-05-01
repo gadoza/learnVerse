@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/videos")
 @RequiredArgsConstructor
-public class CourseContentController {
+public class CourseMediaController {
     private final CourseMediaService courseMediaService;
 
     @PostMapping("/courses/{courseId}")
@@ -32,14 +32,19 @@ public class CourseContentController {
         return ApiResponse.ok(courseMediaService.getAllVideosByCourse(courseId));
     }
 
-    @GetMapping("/download/{fileId}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId){
-        CourseMedia courseMedia = courseMediaService.getVideoById(fileId);
+    @GetMapping("/download/{videoId}")
+    public ResponseEntity<Resource> downloadVideo(@PathVariable Long videoId){
+        CourseMedia courseMedia = courseMediaService.getVideoById(videoId);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(courseMedia.getContentType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"" + courseMedia.getFilename()
                                 + "\"")
                 .body(new ByteArrayResource(courseMedia.getContent()));
+    }
+    @DeleteMapping("/{videoId}")
+    public ApiResponse<String> deleteVideo(@PathVariable Long videoId){
+        courseMediaService.softDeleteVideoById(videoId);
+        return ApiResponse.ok("Video is deleted successfully");
     }
 }

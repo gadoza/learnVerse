@@ -13,4 +13,6 @@ public interface CourseMediaService {
     List<CourseMediaDto> getAllVideosByCourse(Long courseId);
 
     CourseMedia getVideoById(Long fileId);
+
+    void softDeleteVideoById(Long videoId);
 }

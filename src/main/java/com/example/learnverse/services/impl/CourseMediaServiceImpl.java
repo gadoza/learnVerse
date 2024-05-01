@@ -65,4 +65,10 @@ public class CourseMediaServiceImpl implements CourseMediaService {
     public CourseMedia getVideoById(Long fileId) {
         return courseMediaRepository.findById(fileId).orElseThrow(() -> new BusinessException("video not found", HttpStatus.NOT_FOUND));
     }
+
+    @Override
+    @Transactional
+    public void softDeleteVideoById(Long videoId) {
+        courseMediaRepository.softDeleteVideoById(videoId);
+    }
 }

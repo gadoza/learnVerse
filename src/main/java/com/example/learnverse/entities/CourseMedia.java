@@ -4,9 +4,11 @@ import com.example.learnverse.base.model.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "course_media")
+@Where(clause = "is_deleted = 0")
 @Getter
 @Setter
 public class CourseMedia extends BaseEntity<Long> {

@@ -3,8 +3,6 @@ server:
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
-ignore.paths:
-  - /sign-up
 spring:
   application:
     name: learnVerse-service
@@ -32,6 +30,18 @@ spring:
     multipart:
       max-file-size: 10GB
       max-request-size: 10GB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  info:
+    env:
+      enabled: true
+info:
+  app:
+    name: learn verse
+    description: a website that help student to take and teach courses
 
 logging:
   level:

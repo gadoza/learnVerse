@@ -32,3 +32,9 @@ spring:
     multipart:
       max-file-size: 10GB
       max-request-size: 10GB
+
+logging:
+  level:
+    org:
+      springframework:
+        security : debug

@@ -1,7 +1,9 @@
 package com.example.learnverse.security.service;
 
+import com.example.learnverse.exceptions.BusinessException;
 import com.example.learnverse.security.dto.AuthDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -20,6 +22,8 @@ public class TokenService {
     private final JwtEncoder jwtEncoder;
 
     public AuthDto generateToken(Authentication authentication) {
+        if (authentication == null)
+            throw new BusinessException("Cannot generate token without authentication", HttpStatus.INTERNAL_SERVER_ERROR);
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)

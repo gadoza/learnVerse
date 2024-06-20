@@ -5,6 +5,7 @@ import com.example.learnverse.entities.Course;
 import com.example.learnverse.entities.Review;
 import com.example.learnverse.mapper.ReviewMapper;
 import com.example.learnverse.repositories.ReviewRepository;
+import com.example.learnverse.services.CourseService;
 import com.example.learnverse.services.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,10 +19,13 @@ import java.util.Optional;
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
+    private final CourseService courseService;
 
     @Override
     public ReviewDto saveReview(ReviewDto reviewDto) {
-        Review review = reviewRepository.save(reviewMapper.unmap(reviewDto));
+        Review reviewEntity = reviewMapper.unmap(reviewDto);
+        reviewEntity.setCourse(courseService.findById(reviewDto.getId()));
+        Review review = reviewRepository.save(reviewEntity);
         return reviewMapper.map(review);
     }
 

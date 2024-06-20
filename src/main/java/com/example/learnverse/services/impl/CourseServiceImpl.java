@@ -34,6 +34,12 @@ public class CourseServiceImpl implements CourseService {
         }
         return null;
     }
+
+    @Override
+    public Course findById(Long id) {
+        return courseRepository.findCourseById(id).get();
+    }
+
     @Override
     public CourseDto updateCourse(Long id, CourseDto courseDto) {
         Optional<Course> existingCourse = courseRepository.findById(id);

@@ -72,7 +72,7 @@ public class securityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // You can restrict paths with specific patterns
-                        .allowedOrigins("http://127.0.0.1:3000") // Specify the allowed origin
+                        .allowedOrigins("http://127.0.0.1:3000", "http://localhost:3000") // Specify the allowed origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS") // Allowed HTTP Methods
                         .allowedHeaders("*") // Allowed Headers
                         .allowCredentials(true); // Credential Support

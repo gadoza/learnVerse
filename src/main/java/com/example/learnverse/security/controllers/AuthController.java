@@ -5,6 +5,9 @@ import com.example.learnverse.security.dto.AuthDto;
 import com.example.learnverse.security.dto.JpaUserDto;
 import com.example.learnverse.security.service.JpaUserDetailsService;
 import com.example.learnverse.security.service.TokenService;
+import com.example.learnverse.services.StripeService;
+import com.stripe.exception.StripeException;
+import com.example.learnverse.services.StripeService.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ public class AuthController {
 
     private final TokenService tokenService;
     private final JpaUserDetailsService jpaUserDetailsService;
+    private final StripeService stripeService;
 
     @PostMapping("/sign-in")
     public AuthDto signIn(Authentication authentication, HttpServletResponse response) {
@@ -33,7 +37,10 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public ApiResponse<Long> signUp(@RequestBody JpaUserDto userDto) {
+    public ApiResponse<Long> signUp(@RequestBody JpaUserDto userDto) throws StripeException {
+        //add the user as a customer in stripe
+        stripeService.createStripeCustomer(userDto);
+
         return ApiResponse.created(jpaUserDetailsService.insertNewUser(userDto));
     }
 

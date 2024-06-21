@@ -2,7 +2,6 @@ package com.example.learnverse.dto;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
 
 @Data
 public class PaymentInfoRequest {

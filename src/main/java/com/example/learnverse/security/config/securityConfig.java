@@ -20,6 +20,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -45,9 +46,8 @@ public class securityConfig {
                 .authorizeRequests(auth -> auth
                         .requestMatchers("/actuator/**", "/sign-up/**", "/videos/download/**", "/user/**").permitAll()
                         .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer((rs) ->
-                        rs.jwt((jwt) ->jwt.decoder(jwtDecoder())))
+                .httpBasic(auth -> auth.authenticationEntryPoint(new CustomAuthenticationEntryPoint())) // Set custom entry point
+                .oauth2ResourceServer((rs) -> rs.jwt((jwt) -> jwt.decoder(jwtDecoder())))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }

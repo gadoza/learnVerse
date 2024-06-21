@@ -41,6 +41,7 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     }
 
     @Override
+    @Transactional
     public Long insertNewUser(JpaUserDto userDto) {
         validateUserName(userDto);
         JpaUser user = userMapper.unmap(userDto);

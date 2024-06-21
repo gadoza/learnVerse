@@ -6,5 +6,7 @@ public interface JpaUserDetailsService {
     Long insertNewUser(JpaUserDto userDto);
     JpaUserDto getCurrentUserDetails();
 
+    JpaUserDto getCurrentUserDetailsById(Long userId);
+
     void updateUserDetails(JpaUserDto userDto);
 }

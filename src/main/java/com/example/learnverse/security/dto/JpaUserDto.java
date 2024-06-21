@@ -13,4 +13,5 @@ public class JpaUserDto {
     private String address;
     private String firstName;
     private String familyName;
+    private String image;
 }

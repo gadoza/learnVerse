@@ -48,4 +48,8 @@ public class JpaUser extends BaseEntity<Long> {
     )
     private List<Course> taughtCourses;
 
+    @Lob
+    @Column
+    private byte[] image;
+
 }

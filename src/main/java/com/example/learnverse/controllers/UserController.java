@@ -15,7 +15,11 @@ public class UserController {
 
     @GetMapping()
     public ApiResponse<JpaUserDto> getUserDetails() {
-        return ApiResponse.created(jpaUserDetailsService.getCurrentUserDetails()) ;
+        return ApiResponse.ok(jpaUserDetailsService.getCurrentUserDetails()) ;
+    }
+    @GetMapping("/{id}")
+    public ApiResponse<JpaUserDto> getCurrentUserDetailsById(@PathVariable(name = "id") Long userId) {
+        return ApiResponse.ok(jpaUserDetailsService.getCurrentUserDetailsById(userId)) ;
     }
     @PutMapping()
     public ApiResponse updateUserDetails(@RequestBody JpaUserDto userDto) {

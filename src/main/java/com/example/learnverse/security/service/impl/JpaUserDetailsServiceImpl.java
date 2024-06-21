@@ -1,7 +1,6 @@
 package com.example.learnverse.security.service.impl;
 
 import com.example.learnverse.exceptions.BusinessException;
-import com.example.learnverse.exceptions.UsernameAlreadyTakenException;
 import com.example.learnverse.mapper.UserMapper;
 import com.example.learnverse.security.dto.JpaUserDto;
 import com.example.learnverse.security.entities.JpaUser;
@@ -18,6 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -49,11 +49,21 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     }
 
     @Override
+    @Transactional
     public JpaUserDto getCurrentUserDetails() {
         String username = Common.extractUsername(jwtDecoder);
         JpaUser user = userRepository.findJpaUsersByUserName(username).orElseThrow(() -> new BusinessException("user not found", HttpStatus.NOT_FOUND));
-        user.setPassword(null);
-        return userMapper.map(user);
+        JpaUserDto userDto = userMapper.map(user);
+        userDto.setPassword(null);
+        return userDto;
+    }
+    @Override
+    @Transactional
+    public JpaUserDto getCurrentUserDetailsById(Long userId) {
+        JpaUser user = userRepository.findById(userId).orElseThrow(() -> new BusinessException("user not found", HttpStatus.NOT_FOUND));
+        JpaUserDto userDto = userMapper.map(user);
+        userDto.setPassword(null);
+        return userDto;
     }
 
     @Override

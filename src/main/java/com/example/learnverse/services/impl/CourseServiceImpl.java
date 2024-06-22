@@ -4,15 +4,19 @@ import com.example.learnverse.dto.CategoryDto;
 import com.example.learnverse.dto.CourseDto;
 import com.example.learnverse.entities.Category;
 import com.example.learnverse.entities.Course;
+import com.example.learnverse.entities.Review;
+import com.example.learnverse.exceptions.BusinessException;
 import com.example.learnverse.mapper.CategoryMapper;
 import com.example.learnverse.mapper.CourseMapper;
 import com.example.learnverse.repositories.CourseRepository;
 import com.example.learnverse.services.CategoryService;
 import com.example.learnverse.services.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -34,12 +38,12 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public CourseDto getCourseById(Long id) {
-        Optional<Course> course = courseRepository.findCourseById(id);
-        if (course.isPresent()) {
-
-            return courseMapper.map(course.get());
-        }
-        return null;
+        Course course = courseRepository.findCourseById(id).orElseThrow(() -> new BusinessException("course not found", HttpStatus.NOT_FOUND));
+        CourseDto courseDto = courseMapper.map(course);
+        courseDto.setNStudents((long)course.getStudents().size());
+        long totalStars = course.getReviews().stream().mapToLong(Review::getStars).sum();
+        courseDto.setRating(BigDecimal.valueOf(totalStars / (long)course.getReviews().size()));
+        return courseDto;
     }
 
     @Override

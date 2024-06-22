@@ -21,7 +21,7 @@ public class Course extends BaseEntity<Long> {
     private String description;
     @Column
     private BigDecimal price;
-    @ManyToMany(mappedBy = "takenCourses")
+    @ManyToMany(mappedBy = "takenCourses", fetch = FetchType.EAGER)
     private Set<JpaUser> students;
     @ManyToMany
     @JoinTable(
@@ -30,7 +30,7 @@ public class Course extends BaseEntity<Long> {
     )
     private List<Tag> tags;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     private List<Review> reviews;
 
     @Lob

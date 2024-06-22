@@ -5,6 +5,7 @@ import com.example.learnverse.entities.Course;
 import com.example.learnverse.repositories.CourseRepository;
 import com.example.learnverse.security.entities.JpaUser;
 import com.example.learnverse.security.repositories.JpaUserRepository;
+import com.example.learnverse.security.service.JpaUserDetailsService;
 import com.example.learnverse.services.EnrollmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class EnrollmentController {
     private final EnrollmentService enrollmentService;
     private final CourseRepository courseRepository;
+    private final JpaUserDetailsService jpaUserDetailsService;
     private final JpaUserRepository jpaUserRepository;
 
     @PostMapping
     ResponseEntity<Void> enroll(@RequestBody EnrollmentDto enrollmentDto){
         Course enrolledCourse = courseRepository.findCourseById(enrollmentDto.getCourseId()).get();
-        JpaUser enrolledStudent = jpaUserRepository.findJpaUserById(enrollmentDto.getStudentId()).get();
+        JpaUser enrolledStudent = jpaUserDetailsService.findJpaUserById(enrollmentDto.getStudentId()).get();
         if(enrolledStudent == null){
             return ResponseEntity.notFound().build();
         }else if(enrolledCourse == null){

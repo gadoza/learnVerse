@@ -69,12 +69,16 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     }
 
     @Override
+    @Transactional
     public Optional<JpaUser> findJpaUserById(Long id) {
         return userRepository.findJpaUserById(id);
     }
 
     @Override
+    @Transactional
     public void updateUserDetails(JpaUserDto userDto) {
+        JpaUser jpaUser = userRepository.findJpaUserById(userDto.getId()).get();
+        userDto.setPassword(jpaUser.getPassword());
         userRepository.save(userMapper.unmap(userDto));
     }
 

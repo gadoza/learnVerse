@@ -1,2 +1,4 @@
 databaseChangeLog:
-
+  - include:
+      file: ./changes/add_category_lookup.sql
+      relativeToChangelogFile: true

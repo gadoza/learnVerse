@@ -38,6 +38,14 @@ public class Course extends BaseEntity<Long> {
 
     @Lob
     @Column
+    @Basic(fetch = FetchType.EAGER)
     private byte[] image;
+
+
+    @ManyToMany
+    @JoinTable(name = "course_categories",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
 }

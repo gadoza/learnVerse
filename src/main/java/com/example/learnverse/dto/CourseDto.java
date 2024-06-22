@@ -20,4 +20,6 @@ public class CourseDto {
     private List<JpaUser> instructors;
     private Set<JpaUser> students;
     private String image;
+    private List<String> categoryCodes;
+    private List<CategoryDto> categories;
 }

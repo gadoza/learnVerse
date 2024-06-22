@@ -10,6 +10,7 @@ import org.mapstruct.Named;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface CourseMapper {
@@ -19,7 +20,10 @@ public interface CourseMapper {
     Course unmap(CourseDto dto);
 
     List<CourseDto> map(List<Course> t);
+    Set<CourseDto> mapSet(Set<Course> t);
     List<Course> unmap(List<CourseDto> dto);
+
+    Set<Course> unmapSet(Set<CourseDto> dto);
 
     List<ReviewDto> mapReviews(List<Review> reviews);
 

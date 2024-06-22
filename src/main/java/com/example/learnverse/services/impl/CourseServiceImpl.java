@@ -1,28 +1,34 @@
 package com.example.learnverse.services.impl;
 
+import com.example.learnverse.dto.CategoryDto;
 import com.example.learnverse.dto.CourseDto;
+import com.example.learnverse.entities.Category;
 import com.example.learnverse.entities.Course;
+import com.example.learnverse.mapper.CategoryMapper;
 import com.example.learnverse.mapper.CourseMapper;
 import com.example.learnverse.repositories.CourseRepository;
+import com.example.learnverse.services.CategoryService;
 import com.example.learnverse.services.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
+    private final CategoryService categoryService;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public CourseDto saveCourse(CourseDto courseDto) {
-        Course course = courseRepository.save(courseMapper.unmap(courseDto));
+        Course courseEntity = courseMapper.unmap(courseDto);
+        Set<Category> courseCategories = categoryService.getCategoriesByCode(courseDto.getCategoryCodes());
+        courseEntity.setCategories(courseCategories);
+        Course course = courseRepository.save(courseEntity);
         return courseMapper.map(course);
     }
     @Override

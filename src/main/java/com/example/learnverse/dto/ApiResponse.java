@@ -23,7 +23,7 @@ public class ApiResponse<T> {
 
 
     public static <T> ApiResponse<T> ok(T payload) {
-        return status(HttpStatus.OK, payload, null);
+        return status(HttpStatus.OK, payload, LocalDateTime.now().toString());
     }
 
     public static <T> ApiResponse<T> created(T payload) {

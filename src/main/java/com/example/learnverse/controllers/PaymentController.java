@@ -1,7 +1,9 @@
 package com.example.learnverse.controllers;
 
 
+import com.example.learnverse.dto.CheckDto;
 import com.example.learnverse.dto.PaymentInfoRequest;
+import com.example.learnverse.services.EnrollmentService;
 import com.example.learnverse.services.impl.PaymentService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
@@ -19,10 +21,12 @@ import static com.example.learnverse.utilities.JWTUtils.payloadJWTExtraction;
 public class PaymentController {
 
     private PaymentService paymentService;
+    private EnrollmentService enrollmentService;
 
     @Autowired
-    public PaymentController(PaymentService paymentService) {
+    public PaymentController(PaymentService paymentService, EnrollmentService enrollmentService) {
         this.paymentService = paymentService;
+        this.enrollmentService = enrollmentService;
     }
 
 
@@ -45,7 +49,7 @@ public class PaymentController {
 
         String paymentStr = paymentIntent.toJson();
         return new ResponseEntity<>(paymentStr, HttpStatus.OK);
-}
+    }
 
     @PutMapping("/payment-complete")
     public ResponseEntity<String> stripePaymentComplete(@RequestHeader(value="Authorization") String token)
@@ -55,5 +59,14 @@ public class PaymentController {
             throw new Exception("User email is missing");
         }
         return paymentService.stripePayment(userEmail);
+    }
+
+    @GetMapping("/check-payment")
+    public ResponseEntity<String> checkPayment(@RequestBody CheckDto checkDto) {
+
+        if(enrollmentService.checkEnrollment(checkDto.getCourseId(), checkDto.getStudentId()))
+            return new ResponseEntity<>("paid!", HttpStatus.OK);
+        else
+            return new ResponseEntity<>("not paid!", HttpStatus.PAYMENT_REQUIRED);
     }
 }

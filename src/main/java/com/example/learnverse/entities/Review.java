@@ -17,7 +17,7 @@ public class Review extends BaseEntity<Long> {
     @Column
     private Date issueDate;
     @Column
-    private Long n_stars;
+    private Long stars;
     @ManyToOne
     private Course course;
 

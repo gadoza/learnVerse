@@ -36,15 +36,28 @@ public class CourseServiceImpl implements CourseService {
     public CourseDto getCourseById(Long id) {
         Optional<Course> course = courseRepository.findCourseById(id);
         if (course.isPresent()) {
+
             return courseMapper.map(course.get());
         }
         return null;
     }
 
     @Override
+    public List<CourseDto> getCoursesByKeyword(String keyword) {
+        List<Course> courses = courseRepository.findCoursesByNameContaining(keyword);
+        return courseMapper.map(courses);
+    }
+
+    @Override
     public Course findById(Long id) {
         return courseRepository.findCourseById(id).get();
     }
+    @Override
+    public Optional<Course> findCourseById(Long id){
+        return courseRepository.findCourseById(id);
+    }
+
+
 
     @Override
     public CourseDto updateCourse(Long id, CourseDto courseDto) {

@@ -10,8 +10,10 @@ import java.util.Date;
 @Getter
 public class ReviewDto {
     private JpaUserDto user;
-    private Long n_stars;
+    private Long stars;
     private Date issueDate;
     private String content;
-    private Long id;
+    private Long courseId;
+    private Long reviewId;
+    private Long studentId;
 }

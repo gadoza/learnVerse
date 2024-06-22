@@ -8,14 +8,20 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Long> {
+    @Transactional
     @Query("""
             SELECT C FROM Course C WHERE C.id = :id and C.isDeleted = 0
             """)
     Optional<Course> findCourseById(@Param("id") Long id);
+
+    @Transactional
+    @Query("SELECT c FROM Course c WHERE c.courseName LIKE CONCAT('%', :searchString, '%')")
+    List<Course> findCoursesByNameContaining(@Param("searchString") String searchString);
 
     @Query("""
             SELECT C FROM Course C WHERE C.isDeleted = 0
@@ -23,6 +29,10 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
     List<Course> findAllValidCourses();
 
 
+//    @Query("""
+//            SELECT AVG(e.n_stars) FROM Course e WHERE e.is_deleted = 1
+//            """)
+//    BigDecimal calculateCourseRating();
 
     @Modifying
     @Transactional

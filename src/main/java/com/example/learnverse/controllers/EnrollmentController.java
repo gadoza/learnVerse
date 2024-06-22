@@ -20,8 +20,8 @@ public class EnrollmentController {
 
     @PostMapping
     ResponseEntity<Void> enroll(@RequestBody EnrollmentDto enrollmentDto){
-        Course enrolledCourse = courseRepository.getReferenceById(enrollmentDto.getCourseId());
-        JpaUser enrolledStudent = jpaUserRepository.getReferenceById(enrollmentDto.getStudentId());
+        Course enrolledCourse = courseRepository.findCourseById(enrollmentDto.getCourseId()).get();
+        JpaUser enrolledStudent = jpaUserRepository.findJpaUserById(enrollmentDto.getStudentId()).get();
         if(enrolledStudent == null){
             return ResponseEntity.notFound().build();
         }else if(enrolledCourse == null){

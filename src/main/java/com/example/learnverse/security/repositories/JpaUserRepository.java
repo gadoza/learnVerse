@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface JpaUserRepository extends JpaRepository<JpaUser, Long>{
+    Optional<JpaUser> findJpaUserById(Long id);
 
     @Query("""
             SELECT U FROM JpaUser U WHERE U.userName = :userName

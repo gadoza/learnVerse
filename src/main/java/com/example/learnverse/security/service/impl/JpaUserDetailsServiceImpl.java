@@ -49,6 +49,7 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
         return userRepository.save(user).getId();
     }
 
+
     @Override
     @Transactional
     public JpaUserDto getCurrentUserDetails() {
@@ -65,6 +66,11 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
         JpaUserDto userDto = userMapper.map(user);
         userDto.setPassword(null);
         return userDto;
+    }
+
+    @Override
+    public Optional<JpaUser> findJpaUserById(Long id) {
+        return userRepository.findJpaUserById(id);
     }
 
     @Override

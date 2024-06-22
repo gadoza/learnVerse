@@ -23,6 +23,8 @@ public class UserController {
     }
     @PutMapping()
     public ApiResponse updateUserDetails(@RequestBody JpaUserDto userDto) {
+        String img = userDto.getImage();
+        userDto.setImage(img.substring(22));
         jpaUserDetailsService.updateUserDetails(userDto) ;
         return ApiResponse.noContent();
     }

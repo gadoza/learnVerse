@@ -14,11 +14,13 @@ public class CourseDto {
     private Long id;
     private String courseName;
     private String description;
+    private Long nStudents;
+    private BigDecimal rating;
     private BigDecimal price;
-    private List<TagDto> tags;
-    private List<ReviewDto> reviews;
-    private List<JpaUser> instructors;
-    private Set<JpaUser> students;
+    //private List<TagDto> tags;
+    //private List<ReviewDto> reviews;
+    //private List<JpaUser> instructors;
+    //private Set<JpaUser> students;
     private String image;
     private List<String> categoryCodes;
     private List<CategoryDto> categories;

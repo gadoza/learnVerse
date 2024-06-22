@@ -30,9 +30,6 @@ public class Course extends BaseEntity<Long> {
     )
     private List<Tag> tags;
 
-    @ManyToMany(mappedBy = "taughtCourses")
-    private Set<JpaUser> instructors;
-
     @OneToMany(mappedBy = "course")
     private List<Review> reviews;
 

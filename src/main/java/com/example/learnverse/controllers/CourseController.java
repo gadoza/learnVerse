@@ -3,22 +3,29 @@ package com.example.learnverse.controllers;
 import com.example.learnverse.dto.CourseDto;
 
 import com.example.learnverse.services.CourseService;
+import com.example.learnverse.services.StripeService;
+import com.stripe.exception.StripeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/course")
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;
+    private final StripeService stripeService;
 
     @PostMapping
-    public ResponseEntity<CourseDto> addCourse(@RequestBody CourseDto courseDto) {
+    public ResponseEntity<CourseDto> addCourse(@RequestBody CourseDto courseDto) throws StripeException {
         CourseDto savedCourse = courseService.saveCourse(courseDto);
+
+        //add the course as a product in stripe
+        stripeService.createStripeProduct(courseDto);
+
+
         return ResponseEntity.ok(savedCourse);
     }
     @GetMapping("/{id}")
@@ -29,6 +36,12 @@ public class CourseController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<CourseDto>> getCoursesByKeyword(@RequestParam(name = "q") String keyword) {
+        List<CourseDto> coursesDtos = courseService.getCoursesByKeyword(keyword);
+        return ResponseEntity.ok(coursesDtos);
     }
     @GetMapping
     public ResponseEntity<List<CourseDto>> getCourses() {

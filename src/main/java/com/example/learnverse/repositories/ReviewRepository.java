@@ -14,6 +14,8 @@ import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
+
+    @Transactional
     List<Review> findByCourseId(Long id);
     @Modifying
     @Transactional

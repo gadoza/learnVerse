@@ -41,7 +41,7 @@ public class CourseController {
 
     @GetMapping("/search")
     public ResponseEntity<List<CourseDto>> getCoursesByKeyword(@RequestParam(name = "q") String keyword) {
-        keyword.replace('+', ' ');
+        keyword.replace("%20", " ");
         List<CourseDto> coursesDtos = courseService.getCoursesByKeyword(keyword);
         return ResponseEntity.ok(coursesDtos);
     }

@@ -19,6 +19,7 @@ public class Course extends BaseEntity<Long> {
     private String courseName;
     @Column
     private String description;
+
     @Column
     private BigDecimal price;
     @ManyToMany(mappedBy = "takenCourses", fetch = FetchType.EAGER)

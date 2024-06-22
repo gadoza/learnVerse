@@ -20,6 +20,7 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<CourseDto> addCourse(@RequestBody CourseDto courseDto) throws StripeException {
+        courseDto.setImage(courseDto.getImage().substring(22));
         CourseDto savedCourse = courseService.saveCourse(courseDto);
 
         //add the course as a product in stripe
@@ -40,6 +41,7 @@ public class CourseController {
 
     @GetMapping("/search")
     public ResponseEntity<List<CourseDto>> getCoursesByKeyword(@RequestParam(name = "q") String keyword) {
+        keyword.replace('+', ' ');
         List<CourseDto> coursesDtos = courseService.getCoursesByKeyword(keyword);
         return ResponseEntity.ok(coursesDtos);
     }

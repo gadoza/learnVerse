@@ -20,8 +20,9 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
     Optional<Course> findCourseById(@Param("id") Long id);
 
     @Transactional
-    @Query("SELECT c FROM Course c WHERE c.courseName LIKE CONCAT('%', :searchString, '%')")
+    @Query("SELECT c FROM Course c WHERE lower(c.courseName) LIKE lower(concat('%', :searchString, '%'))")
     List<Course> findCoursesByNameContaining(@Param("searchString") String searchString);
+
 
     @Query("""
             SELECT C FROM Course C WHERE C.isDeleted = 0
@@ -42,6 +43,9 @@ public interface CourseRepository extends JpaRepository<Course,Long> {
         where id = :id
 """)
     void softDeleteCourseById(@Param("id") Long id);
+
+    @Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END FROM JpaUser s JOIN s.takenCourses c WHERE s.id = :studentId AND c.id = :courseId")
+    boolean existsStudentWithCourse(@Param("studentId") Long studentId, @Param("courseId") Long courseId);
 
 
 }

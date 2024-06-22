@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface JpaUserDetailsService {
     Long insertNewUser(JpaUserDto userDto);
+
+    JpaUser getUserByUserName(String userName);
     JpaUserDto getCurrentUserDetails();
     Optional<JpaUser> findJpaUserById(Long id);
 

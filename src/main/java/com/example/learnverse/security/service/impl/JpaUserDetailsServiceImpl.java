@@ -49,6 +49,12 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
         return userRepository.save(user).getId();
     }
 
+    @Override
+    public JpaUser getUserByUserName(String userName) {
+        JpaUser user = userRepository.findJpaUsersByUserName(userName).orElseThrow(()-> new BusinessException("user not found", HttpStatus.NOT_FOUND));
+        return user;
+    }
+
 
     @Override
     @Transactional

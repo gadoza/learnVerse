@@ -45,7 +45,7 @@ public class securityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> auth
                         .requestMatchers("/actuator/**", "/sign-up/**", "/videos/download/**", "/user/**", "/stripe-webhook",
-                                "/search/**", "/search", "/course/search").permitAll()
+                                "/search/**", "/search", "/course/search", "/category").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(auth -> auth.authenticationEntryPoint(new CustomAuthenticationEntryPoint())) // Set custom entry point
                 .oauth2ResourceServer((rs) -> rs.jwt((jwt) -> jwt.decoder(jwtDecoder())))

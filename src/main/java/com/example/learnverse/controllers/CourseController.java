@@ -20,7 +20,10 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<CourseDto> addCourse(@RequestBody CourseDto courseDto) throws StripeException {
-        courseDto.setImage(courseDto.getImage().substring(22));
+        if(courseDto.getImage()!= null){
+            String[] splittedBase64Image = courseDto.getImage().split(",");
+            courseDto.setImage(splittedBase64Image[1]);
+        }
         CourseDto savedCourse = courseService.saveCourse(courseDto);
 
         //add the course as a product in stripe

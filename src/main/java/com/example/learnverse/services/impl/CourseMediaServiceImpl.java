@@ -63,7 +63,7 @@ public class CourseMediaServiceImpl implements CourseMediaService {
     @Override
     @Transactional
     public List<CourseMediaDto> getAllVideosByCourse(Long courseId) {
-        if (notRegisteredStudent(courseId)) return null;
+//        if (notRegisteredStudent(courseId)) return null;
         List<CourseMediaDto> courseMediaDTos = courseMediaMapper.map(courseMediaRepository.findAllByCourseId(courseId));
         courseMediaDTos.stream().forEach(courseMediaDTo -> {
             courseMediaDTo.setContentUrl(getDownloadURl(courseMediaDTo.getId()));

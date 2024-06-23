@@ -21,6 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
     @Override
+    @Transactional
     public Set<Category> getCategoriesByCode(List<String> codes) {
         return categoryRepository.getCategoriesByCode(codes);
     }

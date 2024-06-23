@@ -42,7 +42,9 @@ public class CourseServiceImpl implements CourseService {
         CourseDto courseDto = courseMapper.map(course);
         courseDto.setNStudents((long)course.getStudents().size());
         long totalStars = course.getReviews().stream().mapToLong(Review::getStars).sum();
-        courseDto.setRating(BigDecimal.valueOf(totalStars / (long)course.getReviews().size()));
+        if(course.getReviews().size() != 0) {
+            courseDto.setRating(BigDecimal.valueOf(totalStars / (long)course.getReviews().size()));
+        }
         return courseDto;
     }
 

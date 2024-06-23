@@ -24,7 +24,10 @@ public class UserController {
     @PutMapping()
     public ApiResponse updateUserDetails(@RequestBody JpaUserDto userDto) {
         String img = userDto.getImage();
-        userDto.setImage(img.substring(22));
+        if (img != null) {
+            String[] splitedBase64Image = img.split(",");
+            userDto.setImage(splitedBase64Image[1]);
+        }
         jpaUserDetailsService.updateUserDetails(userDto) ;
         return ApiResponse.noContent();
     }

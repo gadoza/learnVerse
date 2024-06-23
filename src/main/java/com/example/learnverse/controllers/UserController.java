@@ -1,10 +1,13 @@
 package com.example.learnverse.controllers;
 
 import com.example.learnverse.dto.ApiResponse;
+import com.example.learnverse.dto.CourseDto;
 import com.example.learnverse.security.dto.JpaUserDto;
 import com.example.learnverse.security.service.JpaUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +33,10 @@ public class UserController {
         }
         jpaUserDetailsService.updateUserDetails(userDto) ;
         return ApiResponse.noContent();
+    }
+    @GetMapping("/{id}/courses")
+    public ApiResponse<List<CourseDto>> getAllCoursesForStudent(@PathVariable(name = "id") Long userId){
+        return ApiResponse.ok(jpaUserDetailsService.getAllCoursesForStudent(userId));
     }
 
 }

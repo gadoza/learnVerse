@@ -1,6 +1,8 @@
 package com.example.learnverse.security.service.impl;
 
+import com.example.learnverse.dto.CourseDto;
 import com.example.learnverse.exceptions.BusinessException;
+import com.example.learnverse.mapper.CourseMapper;
 import com.example.learnverse.mapper.UserMapper;
 import com.example.learnverse.security.dto.JpaUserDto;
 import com.example.learnverse.security.entities.JpaUser;
@@ -19,7 +21,9 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +34,7 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
     private final PasswordEncoder passwordEncoder;
     private final JwtDecoder jwtDecoder;
     private final UserMapper userMapper;
+    private final CourseMapper courseMapper;
 
 
     @Override
@@ -86,6 +91,13 @@ public class JpaUserDetailsServiceImpl implements UserDetailsService, JpaUserDet
         JpaUser jpaUser = userRepository.findJpaUserById(userDto.getId()).get();
         userDto.setPassword(jpaUser.getPassword());
         userRepository.save(userMapper.unmap(userDto));
+    }
+
+    @Override
+    @Transactional
+    public List<CourseDto> getAllCoursesForStudent(Long userId) {
+        JpaUser jpaUser = userRepository.findJpaUserById(userId).get();
+        return new ArrayList<>(courseMapper.mapSet(jpaUser.getTakenCourses()));
     }
 
     private void validateUserName(JpaUserDto userDto) {

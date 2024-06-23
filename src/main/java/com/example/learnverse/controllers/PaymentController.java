@@ -61,7 +61,7 @@ public class PaymentController {
         return paymentService.stripePayment(userEmail);
     }
 
-    @GetMapping("/check-payment")
+    @PostMapping("/check-payment")
     public ResponseEntity<String> checkPayment(@RequestBody CheckDto checkDto) {
 
         if(enrollmentService.checkEnrollment(checkDto.getCourseId(), checkDto.getStudentId()))

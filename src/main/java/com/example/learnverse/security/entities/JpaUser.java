@@ -52,4 +52,6 @@ public class JpaUser extends BaseEntity<Long> {
     @Column
     private byte[] image;
 
+    @OneToMany(mappedBy = "courseOwner")
+    private List<Course> ownedCourses;
 }

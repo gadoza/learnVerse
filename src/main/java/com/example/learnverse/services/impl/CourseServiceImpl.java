@@ -9,10 +9,14 @@ import com.example.learnverse.exceptions.BusinessException;
 import com.example.learnverse.mapper.CategoryMapper;
 import com.example.learnverse.mapper.CourseMapper;
 import com.example.learnverse.repositories.CourseRepository;
+import com.example.learnverse.security.entities.JpaUser;
+import com.example.learnverse.security.service.JpaUserDetailsService;
 import com.example.learnverse.services.CategoryService;
 import com.example.learnverse.services.CourseService;
+import com.example.learnverse.utilities.Common;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +29,21 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
     private final CategoryService categoryService;
-    private final CategoryMapper categoryMapper;
+    private final JpaUserDetailsService jpaUserDetailsService;
+    private final JwtDecoder jwtDecoder;
+
 
     @Override
     public CourseDto saveCourse(CourseDto courseDto) {
         Course courseEntity = courseMapper.unmap(courseDto);
         Set<Category> courseCategories = categoryService.getCategoriesByCode(courseDto.getCategoryCodes());
         courseEntity.setCategories(courseCategories);
+
+        String username = Common.extractUsername(jwtDecoder);
+
+        JpaUser courseOwner = jpaUserDetailsService.getUserByUserName(username);
+        courseEntity.setCourseOwner(courseOwner);
+
         Course course = courseRepository.save(courseEntity);
         return courseMapper.map(course);
     }
@@ -41,6 +53,7 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseRepository.findCourseById(id).orElseThrow(() -> new BusinessException("course not found", HttpStatus.NOT_FOUND));
         CourseDto courseDto = courseMapper.map(course);
         courseDto.setNStudents((long)course.getStudents().size());
+        courseDto.setOwnerId(course.getCourseOwner().getId());
         long totalStars = course.getReviews().stream().mapToLong(Review::getStars).sum();
         if(course.getReviews().size() != 0) {
             courseDto.setRating(BigDecimal.valueOf(totalStars / (long)course.getReviews().size()));

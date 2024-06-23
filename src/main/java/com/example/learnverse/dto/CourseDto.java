@@ -24,4 +24,5 @@ public class CourseDto {
     private String image;
     private List<String> categoryCodes;
     private List<CategoryDto> categories;
+    private Long OwnerId;
 }

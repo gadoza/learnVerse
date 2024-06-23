@@ -46,4 +46,7 @@ public class Course extends BaseEntity<Long> {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
+    @ManyToOne
+    private JpaUser courseOwner;
+
 }
